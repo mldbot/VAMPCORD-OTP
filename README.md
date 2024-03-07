@@ -69,7 +69,6 @@ if __name__ == "__main__":
 ```
 
 ## bot.py
-the loadstring on the last line of the main source
 
 ```py
 # by Dvine aka mogaly
