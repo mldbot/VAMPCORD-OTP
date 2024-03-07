@@ -2,7 +2,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ![DISCORD](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)\
-## short description
+## simple description
 
 basically what my tool does is it, sets up a basic web server using Flask to handle incoming voice requests from Twilio, providing a simple voice-based authentication or verification system. It interacts with users through voice messages and gathers input to perform actions such as blocking requests or re-entering OTPs.
 
