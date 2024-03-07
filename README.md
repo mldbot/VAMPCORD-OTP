@@ -1,0 +1,2 @@
+# VAMPCORD-OTP
+Discord SMS OTP bot
