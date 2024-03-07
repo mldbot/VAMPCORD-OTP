@@ -1,7 +1,10 @@
 <p align="center"><img width=12.5% src="https://media.discordapp.net/attachments/1155402484072853514/1215174671625101332/dddadadadajpg.jpg?ex=65fbca9a&is=65e9559a&hm=14536ed82471893d585507b3ef44e52a63180e2993e41b4e9e523125c4ec75a4&=&format=webp&width=468&height=468"></p>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-![DISCORD](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)
+![DISCORD](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)\
+## short description
+
+basically what my tool does is it, sets up a basic web server using Flask to handle incoming voice requests from Twilio, providing a simple voice-based authentication or verification system. It interacts with users through voice messages and gathers input to perform actions such as blocking requests or re-entering OTPs.
 
 
 ## talker.py
